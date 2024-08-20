@@ -1,4 +1,7 @@
 # ForTraCC Module
+
+The ``fortracc-module`` library is part of the of the TOS2CA Project. For more information, visit the TOS2CA website at [https://nasa-jpl.github.io/tos2ca-documentation/](https://nasa-jpl.github.io/tos2ca-documentation/).
+
 The ForTraCC Module contains tools to implement the 
 [ForTraCC algorithm](http://mtc-m16b.sid.inpe.br/col/sid.inpe.br/mtc-m15@80/2008/06.02.17.27/doc/ForTraCC_Published.pdf) 
 natively in Python without the need of the original Fortran code.  There are slight differences between the Python and
