@@ -158,28 +158,6 @@ def write_nc4(
                 f"`{fn}` already exists.  If you wish to overwrite, set `overwrite=True`."
             )
         
-        # Form tuple to pass to NC file
-        anomaly_table = []
-        all_masks = {
-            timestamp: [] for timestamp in tos.timestamps
-        }
-        for i, events in enumerate(tos.events):
-            anomaly_table.append(
-                {
-                    'name': f'Anomaly {i + 1}',
-                    'start_date': events[0].timestamp,
-                    'end_date': events[-1].timestamp
-                }
-            )
-
-            for mask in events:
-                timestamp = mask.timestamp
-
-                all_masks[timestamp] = [
-                    (row_idx, col_idx, i + 1, data_val)
-                    for row_idx, col_idx, data_val in zip(mask.row_inds, mask.col_inds, mask.data_values)
-                ]
-        
         # Build NC file
         ncfile = nc.Dataset(
             fn,
@@ -217,12 +195,28 @@ def write_nc4(
         lon_var = nav_group.createVariable('lon', 'f4', ('lon',))
         lon_var[:] = np.array(lon, dtype=np.float32)
 
+
         ## Mask data
         mask_group = ncfile.createGroup('masks')
         mask_group.num_events = len(tos.events)
-        for timestamp in tos.timestamps:
-            timestamp_mask_group = mask_group.createGroup(timestamp)
-            indices = all_masks[timestamp]
+
+        # Form tuple to pass to NC file
+        all_timestamps = [ timestamp for timestamp in tos.timestamps ]
+        for this_timestamp in all_timestamps:
+            print('Writing %s' % this_timestamp)
+            individual_masks = []
+            for i, events in enumerate(tos.events):
+                for mask in events:
+                    if this_timestamp == mask.timestamp:
+                        individual_masks.append([
+                            (row_idx, col_idx, i + 1, data_val)
+                            for row_idx, col_idx, data_val in zip(mask.row_inds, mask.col_inds, mask.data_values)
+                        ])
+        
+        
+            timestamp_mask_group = mask_group.createGroup(this_timestamp)
+            indices = individual_masks
+            indices = [elem for sublist in indices for elem in sublist]
 
             ### Integer fields
             mask_ind_dim = timestamp_mask_group.createDimension('num_pixels', len(indices))
@@ -235,7 +229,19 @@ def write_nc4(
             data_val_var = timestamp_mask_group.createVariable('data_values', 'f4', ('num_pixels',))
             data_val_var.description = "Each entry gives the corresponding data value of the mask pixel in `mask_indices`."
             data_val_var[:] = [x[-1] for x in indices]
+
         ncfile.close()
+
+        anomaly_table = []
+        for i, events in enumerate(tos.events):
+            anomaly_table.append(
+                {
+                    'name': f'Anomaly {i + 1}',
+                    'start_date': events[0].timestamp,
+                    'end_date': events[-1].timestamp
+                }
+            )
+
         return anomaly_table
 
 
