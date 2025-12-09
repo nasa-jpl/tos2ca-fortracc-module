@@ -1,6 +1,6 @@
 # ForTraCC Module
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16053702.svg)](https://doi.org/10.5281/zenodo.16053702)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17664955.svg)](https://doi.org/10.5281/zenodo.17664955)
 
 [![Language](https://img.shields.io/badge/python-3.9-blue)](#)
 
