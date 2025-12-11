@@ -155,6 +155,33 @@ class SparseMask:
             bbox,
             mask_type,
         )
+    @classmethod
+    def from_coords(
+        cls,
+        x_coords: List[int],
+        y_coords: List[int],
+        values: List[float],
+        timestamp: str,
+        mask_type: str,
+        properties: Optional[dict] = None,
+    ):
+        if len(x_coords) == 0 or len(y_coords) == 0:
+            bbox = (0, 0, 0, 0)
+        else:
+            min_row = min(y_coords)
+            max_row = max(y_coords)
+            min_col = min(x_coords)
+            max_col = max(x_coords)
+            bbox = (min_row, min_col, max_row + 1, max_col + 1)  # assuming exclusive max
+
+        return cls(
+            row_inds=y_coords,
+            col_inds=x_coords,
+            data_values=values,
+            timestamp=timestamp,
+            bbox=bbox,
+            mask_type=mask_type
+        )
 
 
 class Scene:
