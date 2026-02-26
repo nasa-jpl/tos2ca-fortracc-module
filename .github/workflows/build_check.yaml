@@ -33,5 +33,5 @@ jobs:
     - name: Test installation and import
       run: |
         pip install dist/*.whl
-        python -c "import tos2ca; print('Import successful!')"
-        python -c "from tos2ca import iolib; print('Submodule iolib loaded!')"
+        python -c "import fortracc_module; print('Import successful!')"
+        python -c "from fortracc_module import flow; print('Submodule flow loaded!')"
