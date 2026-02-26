@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fortracc_module"
+version = "2.1"
+description = "TOS2CA ForTraCC Library"
+readme = "README.md"
+requires-python = ">=3.9.20,<3.10"
+license = { text = "Apache 2.0" }
+authors = [
+  { name = "Brian Knosp", email = "Brian.Knosp@jpl.nasa.gov" }
+]
+
+dependencies = [
+  "contourpy==1.0.6",
+  "cycler==0.11.0",
+  "fonttools==4.38.0",
+  "imageio==2.37.0",
+  "kiwisolver==1.4.4",
+  "matplotlib==3.6.2",
+  "networkx==3.2.1",
+  "numpy==1.24.3",
+  "packaging==25.0",
+  "pandas==1.5.3",
+  "Pillow==9.4.0",
+  "pyparsing==3.0.9",
+  "python-dateutil==2.9.0.post0",
+  "pytz==2025.2",
+  "PyWavelets==1.4.1",
+  "scikit-image==0.19.3",
+  "scipy==1.10.1",
+  "six==1.16.0",
+  "tifffile==2024.8.30",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
