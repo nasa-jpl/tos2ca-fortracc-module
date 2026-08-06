@@ -35,6 +35,9 @@ dependencies = [
   "tifffile==2024.8.30",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
