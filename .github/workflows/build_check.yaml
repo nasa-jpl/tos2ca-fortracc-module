@@ -35,3 +35,9 @@ jobs:
         pip install dist/*.whl
         python -c "import fortracc_module; print('Import successful!')"
         python -c "from fortracc_module import flow; print('Submodule flow loaded!')"
+
+    - name: Install test dependencies
+      run: pip install pytest
+
+    - name: Run unit tests
+      run: python -m pytest tests/ -v
